@@ -1,0 +1,32 @@
+import cx_Oracle
+import sys
+import os
+import pandas as pd
+import subprocess
+
+dsn = cx_Oracle.makedsn('Ip_Address','port_num',service_name="your_service_name.com")
+con = cx_Oracle.connect("user_schema","your_password", dsn)
+print("Database version:", con.version)
+
+cur = con.cursor()
+#cur.execute("select * from user_jobs")
+#cur.execute("select job, what, interval, broken from user_jobs where broken= 'Y'")
+cur.execute("select * execute your selects c")
+
+#res = cur.fetchone()
+#for row in res:
+#       print(row)
+columns = [desc[0] for desc in cur.description]
+data = cur.fetchall()
+df = pd.DataFrame(list(data), columns=columns)
+
+writer = pd.ExcelWriter('/appl/gcti/scripts/Python_Scripts/db_connection/db_output.xlsx')
+df.to_excel(writer, sheet_name='db_job')
+writer.save()
+
+#subprocess.call(["mailx", "-s", "\"Test Python\"", "martin.drotar@t-systems.com"])
+
+subprocess.call("echo | mailx -a /the path to your xlsx file jozko.mrkvicka@.cz", shell=True)
+
+cur.close()
+con.close()
