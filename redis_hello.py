@@ -3,7 +3,7 @@ import redis
 
 redis_host=10.171.139.78
 redis_port=6379
-redis_password= "3d66a3e822d96f9025cb8a0b1e30e97bc6f39ff74b8358e3153280a9cf84a195123"
+redis_password= "dfhdhdfh5ru5u34u33442462346234634jtjrtjrtjj5646u35u35u54"
 
 
 def hello_redis(): 
